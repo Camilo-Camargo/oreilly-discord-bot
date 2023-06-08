@@ -26,12 +26,8 @@ def read_user_account() -> list:
     try:
         with open(ACCOUNT_FILE_NAME, "r") as f:
             file_data = f.read()
-            account = file_data.split(':')
 
-            # Delete escape sequence
-            # TODO: refactor in a function
-            account = list(map(lambda x: "".join(
-                [c for c in x if c.isalpha()]), account))
+        account = file_data.split(':')
         return account
     except FileNotFoundError:
         return []
