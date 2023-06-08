@@ -37,30 +37,33 @@ def read_user_account() -> list:
         return []
 
 
+def create_account() -> (str, str):
+    output_docker_oreilly_trial = subprocess.run(
+        f'docker run -i {DOCKER_OREILLY_TRIAL}',
+        text=True,
+        capture_output=True,
+        shell=True,
+    ).stdout
+
+    output_docker_oreilly_trial = ansi_escape(output_docker_oreilly_trial)
+
+    output_docker_oreilly_trial = output_docker_oreilly_trial.split('\n')
+    account = output_docker_oreilly_trial[-2].split()[-2:]
+
+    email = account[0].split('=')[-1]
+    password = account[1].split('=')[-1]
+
+    return (email, password)
+
+
+def save_account(filename, account):
+    with open(ACCOUNT_FILE_NAME, 'w') as f:
+        f.write(f'{account[0]}:{account[1]}')
+
+
 if __name__ == "__main__":
     account = read_user_account()
     if (len(account) == 0):
-        output_docker_oreilly_trial = subprocess.run(
-            f'docker run -i {DOCKER_OREILLY_TRIAL}',
-            text=True,
-            capture_output=True,
-            shell=True,
-        ).stdout
-
-        output_docker_oreilly_trial = ansi_escape(output_docker_oreilly_trial)
-
-        # with open('output.txt', 'w') as f:
-        #    f.write(output_docker_oreailly_trial.stdout)
-
-        # with open('output.txt', 'r') as f:
-        #    output_docker_oreilly_trial = ansi_escape(f.read())
-
-        # save generated password and email
-        output_docker_oreilly_trial = output_docker_oreilly_trial.split('\n')
-        account = output_docker_oreilly_trial[-2].split()[-2:]
-
-        email = account[0].split('=')[-1]
-        password = account[1].split('=')[-1]
-
-        with open(ACCOUNT_FILE_NAME, 'w') as f:
-            f.write(f'{email}:{password}')
+        new_account = create_account()
+        save_account(new_account)
+    print(account)
