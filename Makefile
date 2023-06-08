@@ -1,2 +1,2 @@
 run:
-	python book.py
+	python main.py
