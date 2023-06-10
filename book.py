@@ -1,9 +1,17 @@
 import subprocess
 from account import read_user_account
+from account import create_account
 PYTHON_BIN_PATH = "./.oreilly-discord-bot/bin/python"
 
 
-def safaribook(email, password, bookid):
+async def safaribook(bookid):
+
+    account = read_user_account()
+    if (account == []):
+        account = create_account
+
+    [email, password] = account
+
     command = f'{PYTHON_BIN_PATH} ./third_party/safaribooks/safaribooks.py'
     args = f"--cred '{email}':'{password}' {bookid}"
 
