@@ -1,3 +1,6 @@
+[submodule "safaribooks"]
+	path = safaribooks
+	url = https://github.com/lorenzodifuccia/safaribooks
 [submodule "third_party/safaribooks"]
 	path = third_party/safaribooks
 	url = https://github.com/lorenzodifuccia/safaribooks
