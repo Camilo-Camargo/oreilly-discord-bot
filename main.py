@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from book import safaribook
+from converter import download_and_convert, convert_pdf_to_word
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
